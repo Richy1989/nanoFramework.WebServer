@@ -663,23 +663,18 @@ namespace nanoFramework.WebServer
 
                         HandleContextResponse(context);
                     }).Start();
-
-                }
-
-                if (_listener.IsListening)
-                {
-                    _listener.Stop();
                 }
             }
             catch
             {
-                // Make sure the listener is stopped in this state
-                if (_listener.IsListening)
-                {
-                    _listener.Stop();
-                }
                 // If we are here then set the server state to not running
                 _cancel = true;
+            }
+
+            // Make sure the listener is stopped in this state
+            if (_listener.IsListening)
+            {
+                _listener.Stop();
             }
 
             WebServerStatusChanged?.Invoke(this, new WebServerStatusEventArgs(WebServerStatus.Stopped));
