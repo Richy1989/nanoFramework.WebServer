@@ -673,6 +673,11 @@ namespace nanoFramework.WebServer
             }
             catch
             {
+                // Make sure the listener is stopped in this state
+                if (_listener.IsListening)
+                {
+                    _listener.Stop();
+                }
                 // If we are here then set the server state to not running
                 _cancel = true;
             }
